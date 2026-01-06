@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Audio player</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <template id="audio-item-template">
+      <div class="card">
+        <p class="desc" v-html="item.description"></p>
+        <audio controls preload="none">
+          <source :src="item.url" />
+        </audio>
+      </div>
+    </template>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <script>
+      const { createApp, defineComponent, ref, computed } = Vue;
+
+      const AudioItem = defineComponent({
+        name: "AudioItem",
+        props: {
+          item: { type: Object, required: true }
+        },
+        template: "#audio-item-template",
+        setup() {
+          return {};
+        }
+      });
+
+      const App = defineComponent({
+        components: { AudioItem },
+        setup() {
+          const filterPattern = ref('');
+
+          const AUDIO_ITEMS = [
+            {
+              url: "media/tout_cque_fait_ce_mec_cest_des_conneries.mp3",
+              description: "Tout c'que fait ce mec, c'est des conneries.",
+            },
+            {
+              url: "media/cest_pas_bieng.mp3",
+              description: `- J'ai hypothéqué la maison. Vas-y, explique moi la chose. Allez, engueule moi ! J'ai fait une connerie !<br />
+              - Bah c'est pas bieng.<br />
+              - Oh ! Allez !<br />
+              - C'est pas bieng. Fallait pas le faire.<br />
+              - Oh putain.
+              `,
+            }
+          ];
+
+          const items = computed(() => {
+            const lower = filterPattern.value.toLocaleLowerCase();
+            return AUDIO_ITEMS.filter((item) => item.description.toLocaleLowerCase().includes(lower));
+          });
+
+          return { items, filterPattern };
+        },
+        template: `
+          <div class="container">
+            <div class="filter-wrapper">
+              <button v-if="filterPattern" class="clear-btn" type="button" @click="filterPattern = ''">X</button>
+              <input type="text" class="filter-input" placeholder="Filter" v-model="filterPattern"" />
+            </div>
+            <AudioItem v-for="item of items" :key="item.url" :item="item" />
+          </div>
+        `
+      });
+
+      createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

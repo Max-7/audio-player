@@ -1,0 +1,104 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    background-image: url("background.png");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h1 {
+    margin-bottom: 16px;
+}
+
+.container {
+    padding: 25px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 14px;
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(2px);
+}
+
+audio {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.filter-input {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 10px 0;
+    padding-left: 40px;
+    margin: 15px 15px 16px;
+
+    font-size: 0.95rem;
+    font-family: inherit;
+
+    color: #111;
+    background: rgba(255, 255, 255, 0.95);
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    outline: none;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.filter-input:hover {
+    border-color: #ccc;
+}
+
+.filter-input:focus {
+    border-color: #999;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.filter-wrapper {
+    position: relative;
+    max-width: 420px;
+    margin-bottom: 16px;
+}
+
+.clear-btn {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+
+    width: 20px;
+    height: 20px;
+
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.08);
+    color: #333;
+
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+
+    cursor: pointer;
+    padding: 0;
+}
+
+.clear-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.clear-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.15);
+}
