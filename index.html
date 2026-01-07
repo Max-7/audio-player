@@ -40,12 +40,10 @@
         setup() {
           const filterPattern = ref('');
 
-          const AUDIO_ITEMS = [
-            {
+          const AUDIO_ITEMS = [{
               url: "media/tout_cque_fait_ce_mec_cest_des_conneries.mp3",
               description: "Tout c'que fait ce mec, c'est des conneries.",
-            },
-            {
+            }, {
               url: "media/cest_pas_bieng.mp3",
               description: `- J'ai hypothéqué la maison. Vas-y, explique moi la chose. Allez, engueule moi ! J'ai fait une connerie !<br />
               - Bah c'est pas bieng.<br />
@@ -53,6 +51,38 @@
               - C'est pas bieng. Fallait pas le faire.<br />
               - Oh putain.
               `,
+            }, {
+              url: "media/donald_duck.mp3",
+              description: `- C'est qui l'patron ?<br />
+              - C'est moi.<br />
+              - On dirait Donald Duck.`
+            }, {
+              url: "media/putain_cest_bon_ca.mp3",
+              description: "Putain ! Ahhh ! C'est bon ça !"
+            }, {
+              url: "media/bras_casses.mp3",
+              description: "Je suis tombé sur une belle bande de bras cassés."
+            }, {
+              url: "media/cest_degueulasse.mp3",
+              description: "C'est dégueulasse."
+            }, {
+              url: "media/une_vraie_merde_cest_a_chier.mp3",
+              description: "Une vraie merde, c'est à chier ça."
+            }, {
+              url: "media/jvomis_maintenant.mp3",
+              description: "J'vomis maintenant, ou j'attends un peu là ?"
+            }, {
+              url: "media/pate_de_vomi.mp3",
+              description: "On dirait un gros paté de vomi dans mon assiette. C'est pas joli du tout."
+            }, {
+              url: "media/oh_la_vache.mp3",
+              description: "Oh la vache !"
+            }, {
+              url: "media/ca_va_jusquau_fond.mp3",
+              description: "Ça va jusqu'au fond ! Ça va jusqu'au fond. Ça va jusqu'au fond ! Putain !"
+            }, {
+              url: "media/tu_travailles_dans_la_merde.mp3",
+              description: "Tu travailles dans la merde. Tu fais d'la merde, tu travailles dans la merde !"
             }
           ];
 
@@ -67,7 +97,7 @@
           <div class="container">
             <div class="filter-wrapper">
               <button v-if="filterPattern" class="clear-btn" type="button" @click="filterPattern = ''">X</button>
-              <input type="text" class="filter-input" placeholder="Filter" v-model="filterPattern"" />
+              <input type="text" class="filter-input" placeholder="Filtrer" v-model="filterPattern"" />
             </div>
             <AudioItem v-for="item of items" :key="item.url" :item="item" />
           </div>
