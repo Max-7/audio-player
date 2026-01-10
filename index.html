@@ -97,7 +97,7 @@
           <div class="container">
             <div class="filter-wrapper">
               <button v-if="filterPattern" class="clear-btn" type="button" @click="filterPattern = ''">X</button>
-              <input type="text" class="filter-input" placeholder="Filtrer" v-model="filterPattern"" />
+              <input type="text" class="filter-input" placeholder="Filtrer" v-model="filterPattern" />
             </div>
             <AudioItem v-for="item of items" :key="item.url" :item="item" />
           </div>
