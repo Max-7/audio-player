@@ -89,7 +89,10 @@
       const App = defineComponent({
         components: { AudioItem },
         setup() {
-          const filterPattern = ref('');
+          const params = new URLSearchParams(window.location.search);
+          const defaultMedia = params.get('media');
+
+          const filterPattern = ref(defaultMedia ?? '');
 
           const AUDIO_ITEMS = [{
               url: "media/tout_cque_fait_ce_mec_cest_des_conneries.mp3",
@@ -212,16 +215,16 @@
             }
           ];
 
-          const params = new URLSearchParams(window.location.search);
-          const defaultMedia = params.get('media');
-
           function isMediaAutoplayed(url) {
             return url === defaultMedia;
           }
 
           const items = computed(() => {
+            if (!filterPattern.value) {
+              return AUDIO_ITEMS;
+            }
             const lower = filterPattern.value.toLocaleLowerCase();
-            return AUDIO_ITEMS.filter((item) => item.description.toLocaleLowerCase().includes(lower));
+            return AUDIO_ITEMS.filter((item) => item.description.toLocaleLowerCase().includes(lower) || item.url.toLocaleLowerCase().includes(lower));
           });
 
           return { items, filterPattern, isMediaAutoplayed };
