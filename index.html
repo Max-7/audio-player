@@ -13,9 +13,47 @@
     <template id="audio-item-template">
       <div class="card">
         <p class="desc" v-html="item.description"></p>
-        <audio controls preload="none">
-          <source :src="item.url" />
-        </audio>
+
+        <div class="audio-row">
+          <audio controls preload="none" :autoplay="autoplay">
+            <source :src="item.url" />
+          </audio>
+
+          <button
+            class="copy-btn"
+            type="button"
+            :disabled="state === 'copying'"
+            :aria-label="ariaLabel"
+            @click="copyMediaURL"
+          >
+            <svg
+              v-if="!copied"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+
+            <svg
+              v-else
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </button>
+
+          <span class="copy-feedback" :class="{ show: copied }">
+            Copié
+          </span>
+        </div>
       </div>
     </template>
 
@@ -27,11 +65,24 @@
       const AudioItem = defineComponent({
         name: "AudioItem",
         props: {
-          item: { type: Object, required: true }
+          item: { type: Object, required: true },
+          autoplay: { type: Boolean, required: false },
         },
         template: "#audio-item-template",
-        setup() {
-          return {};
+        setup(props) {
+          const copied = ref(false);
+
+          function copyMediaURL() {
+            const url = new URL(window.location.href);
+            url.searchParams.set('media', props.item.url);
+            navigator.clipboard.writeText(url.toString());
+            copied.value = true;
+            setTimeout(() => {
+              copied.value = false;
+            }, 1500);
+          }
+
+          return { copied, copyMediaURL };
         }
       });
 
@@ -161,12 +212,19 @@
             }
           ];
 
+          const params = new URLSearchParams(window.location.search);
+          const defaultMedia = params.get('media');
+
+          function isMediaAutoplayed(url) {
+            return url === defaultMedia;
+          }
+
           const items = computed(() => {
             const lower = filterPattern.value.toLocaleLowerCase();
             return AUDIO_ITEMS.filter((item) => item.description.toLocaleLowerCase().includes(lower));
           });
 
-          return { items, filterPattern };
+          return { items, filterPattern, isMediaAutoplayed };
         },
         template: `
           <div class="container">
@@ -174,7 +232,7 @@
               <button v-if="filterPattern" class="clear-btn" type="button" @click="filterPattern = ''">X</button>
               <input type="text" class="filter-input" placeholder="Filtrer" v-model="filterPattern" />
             </div>
-            <AudioItem v-for="item of items" :key="item.url" :item="item" />
+            <AudioItem v-for="item of items" :key="item.url" :item="item" :autoplay="isMediaAutoplayed(item.url)" />
           </div>
         `
       });

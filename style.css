@@ -24,6 +24,8 @@ body {
     padding-left: 25px;
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(2px);
+    display: grid;
+    gap: 12px;
 }
 
 .desc {
@@ -40,7 +42,56 @@ body {
 }
 
 audio {
-    width: 100%;
+    flex: 1;
+}
+
+.audio-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.copy-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.copy-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.copy-btn:active {
+  transform: translateY(1px);
+}
+
+.copy-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.copy-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.copy-feedback {
+  font-size: 12px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 150ms ease, transform 150ms ease;
+  white-space: nowrap;
+}
+
+.copy-feedback.show {
+  opacity: 0.7;
+  transform: translateX(0);
 }
 
 .filter-input {
